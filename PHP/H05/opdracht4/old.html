@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <title>4</title>
+    <style>
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            width: 200px;
+            border: 1px solid #4632a8;
+        }
+
+        div {
+            color: #4632a8;
+            background: #4632a8;
+            padding: 12px;
+        }
+
+        .btn {
+            margin-top: 10px;
+            width: 50%;
+        }
+    </style>
+</head>
+<body class="container">
+    
+<?php 
+    if (!isset($_POST['knop'])) {
+
+        // FORMULIER //
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>
+            Naam: <input type="text" name="mailadres" placeholder="mailadres"><br>
+            Wachtwoord: <input type="password" name="password" placeholder="password">
+            <input type="submit" name="knop" value="VERSTUUR">
+        </form>
+
+        <?php
+    } else {
+        if (!isset($_POST["mailadres"]) OR empty($_POST['mailadres'])) {
+            exit("verkeerde email");
+        }
+
+        if (!isset($_POST["wachtwoord]) OR empty($_POST['wachtwoord'])) {
+            exit("verkeerde wachtwoord");
+        }
+    }
+?>
+    
+</body>
+</html>
+
+
+<!-- 
+
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" class="form-group">
+            <div class="form-control">
+            Naam: <input type="email" name="email" placeholder="enter email"><br>
+            Wachtwoord: <input type="password" name="password" placeholder="enter password"><br>
+            <input class="btn" type="submit" name="knop" value="verstuur">
+            </div>
+ </form>
+
+
+
+
+
+ -->
