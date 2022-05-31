@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+error_reporting(0);
 ?>
 
 
@@ -100,6 +101,7 @@ session_start();
 
 
 <?php
+error_reporting(0);
 
 class brood {
 
@@ -171,14 +173,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         if(isset($_SESSION['arr_input'])) {
         $arr_input = $_SESSION['arr_input'];
         } else {
-        $_SESSION['brood_winkel'][$arr_input]->setGewicht($gewicht);
         $_SESSION['brood_winkel'][$arr_input]->setSoort_meel($vorm_brood);
         $_SESSION['brood_winkel'][$arr_input]->setVorm_brood($soort_meel);
+        $_SESSION['brood_winkel'][$arr_input]->setGewicht($gewicht);
         }
     }
 }
 
-//unset
 
 
 // ADD NEW BROOD
@@ -198,6 +199,7 @@ foreach($brood_winkel as $newbrood) {
 $_SESSION['brood_winkel'] = $brood_winkel;
 $_SESSION['update'] = $arr_input;
 
+error_reporting(0);
 
 ?>
 </body>
