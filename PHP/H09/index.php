@@ -1,7 +1,10 @@
 <?php
 
-session_start();
-error_reporting(0);
+    session_start();
+//Je brood winkel is je belangrijskte onderdeel deze maak je aan het begin en gebruik je daarna. Het is niet handig om constant tussen 2 variables te switchen. 
+    if(!isset($_SESSION['brood_winkel'])){
+        $_SESSION['brood_winkel'] =  array();
+    }
 ?>
 
 
@@ -101,8 +104,7 @@ error_reporting(0);
 
 
 <?php
-error_reporting(0);
-
+//Nette brood class. je had hier de variabele ook private kunnen maken omdat je get en set functies hebt.
 class brood {
 
     public $soort_meel;
@@ -141,38 +143,27 @@ class brood {
     }
 
 }
-
-$brood_winkel = $_SESSION['brood_winkel'];
-
+//Mooi gebruik gemaakt van de alternatieve stijl van een if statement.
 $soort_meel = isset($_POST['soortMeel']) && !empty($_POST['soortMeel']) ? $_POST['soortMeel'] : null;
 $vorm_brood = isset($_POST['vorm']) && !empty($_POST['vorm']) ? $_POST['vorm'] : null;
 $gewicht = isset($_POST['gewicht']) && !empty($_POST['gewicht']) ? $_POST['gewicht'] : null;
-$arr_input = isset($_POST['arr_input']) && !empty($_POST['arr_input']) ? $_POST['arr_input'] : null;
+//Hier stond !empy($_POST['arr_input']) dat zorgde er voor dat als je 0 invoerde hij als leeg wordt gezien omdat 0 niets is. Haal je dat weg dan kan je ook index 0 updaten. 
+$arr_input = isset($_POST['arr_input']) ? $_POST['arr_input'] : null;
 
-
+echo $arr_input;
+    
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    global $brood_winkel;
-
+//Omdat je brood winkel nu boven aan maakt hoef je hier niets te checken of te maken. 
     if(isset($_POST['add'])) {
-        if(isset($_SESSION['brood_winkel'])) {
-            $brood_winkel = $_SESSION['brood_winkel'];
-        } else {
-            $brood_winkel = array(
-                
-            );
-        }
-
         if ($soort_meel != null && $vorm_brood != null && $gewicht != null) {
-            array_push($brood_winkel, new brood($soort_meel, $vorm_brood, $gewicht));
+            array_push($_SESSION['brood_winkel'], new brood($soort_meel, $vorm_brood, $gewicht));
         }
     }
 
 
     if(isset($_POST['update'])) {
 
-        if(isset($_SESSION['arr_input'])) {
-        $arr_input = $_SESSION['arr_input'];
-        } else {
+        if($arr_input != "") {
         $_SESSION['brood_winkel'][$arr_input]->setSoort_meel($vorm_brood);
         $_SESSION['brood_winkel'][$arr_input]->setVorm_brood($soort_meel);
         $_SESSION['brood_winkel'][$arr_input]->setGewicht($gewicht);
@@ -181,11 +172,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-
-// ADD NEW BROOD
-
-
-foreach($brood_winkel as $newbrood) {
+foreach($_SESSION['brood_winkel'] as $newbrood) {
     echo "<table>";
     echo "<tr>";
     echo "<th>" . $newbrood->getSoort_meel() . "</th>";
@@ -195,12 +182,8 @@ foreach($brood_winkel as $newbrood) {
     echo "</table>";
 }
 
-
-$_SESSION['brood_winkel'] = $brood_winkel;
-$_SESSION['update'] = $arr_input;
-
-error_reporting(0);
-
+//Je enige session variabele moet broodwinkel zijn. Je had hier eerst ook die arr input maar dat was overbodig.     
+    
 ?>
 </body>
 </html>
